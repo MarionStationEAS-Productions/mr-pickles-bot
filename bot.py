@@ -37,9 +37,11 @@ async def setgame(ctx, *, game):
         try:
             await bot.change_presence(game=discord.Game(name=game))
         except:
-            await bot.say("<:mrpickles:480552232165572608> Failed to change game")
+            embed=discord.Embed(title="Failed", description="Couldn't change game.. Check console.", color=0xfb0006)
+            await bot.say(embed=embed)
         else:
-            await bot.say("<:mrpickles:480552232165572608> Successfuly changed game to {}".format(game))
+            embed=discord.Embed(title="Success!", description="Game changed.", color=0xfb0006)
+            await bot.say(embed=embed)
     else:
         await bot.send_cmd_help(ctx)
 
@@ -52,9 +54,11 @@ async def setname(ctx, *, name):
         try:
             await bot.edit_profile(username=name)
         except:
-            await bot.say("<:mrpickles:480552232165572608> Failed to change name")
+            embed=discord.Embed(title="Failed", description="Couldn't change name. Check console.", color=0xfb0006)
+            await bot.say(embed=embed)
         else:
-            await bot.say("<:mrpickles:480552232165572608> Successfuly changed name to {}".format(name))
+            embed=discord.Embed(title="Success!", description="Name changed.", color=0xfb0006)
+            await bot.say(embed=embed)
     else:
         await bot.send_cmd_help(ctx)
 
@@ -68,6 +72,8 @@ async def on_command_error(error, ctx):
     elif isinstance(error, commands.CommandInvokeError):
         print("<:mrpickles:480552232165572608> Exception in command '{}', {}".format(ctx.command.qualified_name, error.original))
         traceback.print_tb(error.original.__traceback__)
+        embed=discord.Embed(title="Error", description="It seems like something went wrong. Check console/report to my developers.", color=0xfb0006)
+        await bot.say(embed=embed)
 
 @bot.command(pass_context=True, no_pm=True)
 async def avatar(ctx, member: discord.Member):
@@ -82,28 +88,33 @@ async def guildicon(ctx):
 @bot.command(pass_context=True)
 async def guildid(ctx):
 	  """Guild ID"""
-	  await bot.say("`{}`".format(ctx.message.server.id))
+	  await bot.reply("`{}`".format(ctx.message.server.id))
 
 @bot.command(pass_context=True, hidden=True)
 async def setavatar(ctx, url):
-	if ctx.message.author.id not in owner:
-		return
-	async with aiohttp.ClientSession() as session:
-		async with session.get(url) as r:
-			data = await r.read()
-	await bot.edit_profile(avatar=data)
-	await bot.say("<:mrpickles:480552232165572608> I changed my icon")
+    if ctx.message.author.id not in owner:
+    	return
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as r:
+            data = await r.read()
+    await bot.edit_profile(avatar=data)
+    embed=discord.Embed(title="Success!", description="Avatar changed.", color=0xfb0006)
+    await bot.say(embed=embed)
 
 @bot.command()
 async def invite():
-  	"""Bot Invite"""
-  	await bot.say("\U0001f44d")
-  	await bot.whisper("<:mrpickles:480552232165572608> Add me with this link {}".format(discord.utils.oauth_url(bot.user.id)))
+    """Bot Invite"""
+    embed = discord.Embed(title="\U0001f44d")
+    embed2=discord.Embed(title="Mr. Pickles Invite", url=(discord.utils.oauth_url(bot.user.id)), description="Click the link if you want me to join your server.", color=0xfb0006)
+    await bot.say(embed=embed)
+    await bot.whisper(embed=embed2)
 
 @bot.command()
 async def guildcount():
-  	"""Bot Guild Count"""
-  	await bot.say("<:mrpickles:480552232165572608> **I'm in {} Guilds!**".format(len(bot.servers)))
+    """Bot Guild Count"""
+    embed=discord.Embed(title=(len(bot.servers)), color=0xfb0006)
+    embed.set_author(name="Guild Count")
+    await bot.say(embed=embed)
 
 @bot.event
 async def send_cmd_help(ctx):
@@ -121,15 +132,27 @@ async def send_cmd_help(ctx):
             await bot.send_message(ctx.message.channel, embed=em)
             
 @bot.command(pass_context=True)
-async def ping():
-    """Pong!"""
-    await bot.reply(" <:mrpickles:480552232165572608> Pong!")
+async def ping(ctx):
+    embed = discord.Embed(title="Pong! :ping_pong:")
+    await bot.say(embed=embed)
 
 @bot.command(pass_context=True)
 async def info():
-    """Pong!"""
-    await bot.say(" <:mrpickles:480552232165572608> Mr. Pickles | Developed by MZFX18#0069 & JoshTheGamer632#0017")
-    await bot.say(version)
+    """Information about this bot!"""
+    embed=discord.Embed(title="Mr. Pickles Discord Bot", color=0xfb0006)
+    embed.add_field(name="Version", value=(version), inline=True)
+    embed.add_field(name="Developers", value="MZFX18#0069 & JoshTheGamer632#0017", inline=True)
+    await bot.say(embed=embed)
+
+@bot.command(pass_context=True, hidden=True)
+async def shutdown(ctx):
+    if ctx.message.author.id not in owner:
+        await bot.say("Naughty you...")
+        return
+    embed=discord.Embed(title="Back to my lair I go...", color=0xfb0006)
+    await bot.say(embed=embed)
+    await bot.logout()
+
 
 
 bot.run('')  # Where 'TOKEN' is your bot token
