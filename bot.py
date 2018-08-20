@@ -8,12 +8,15 @@ import os
 from random import choice, randint
 
 owner = ["222526329109741568"]
+version = "Ver. 0.0.0.1 dev2"
 
 bot = commands.Bot(command_prefix='p!', description=" <:mrpickles:480552232165572608> I'm that demonic border collie from that television show.")
 
 @bot.event
 async def on_ready():
     print('Mr. Pickles Discord Bot')
+    print('Version:')
+    print(version)
     print('Logged in as')
     print(bot.user.name)
     print('With ID:')
@@ -125,7 +128,8 @@ async def ping():
 @bot.command(pass_context=True)
 async def info():
     """Pong!"""
-    await bot.reply(" <:mrpickles:480552232165572608> Mr. Pickles | Ver. 0.0.1 | Developed by MZFX18#0069 & JoshTheGamer632#0017")
+    await bot.say(" <:mrpickles:480552232165572608> Mr. Pickles | Developed by MZFX18#0069 & JoshTheGamer632#0017")
+    await bot.say(version)
 
 
 bot.run('')  # Where 'TOKEN' is your bot token
