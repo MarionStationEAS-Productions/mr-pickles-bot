@@ -140,8 +140,8 @@ async def ping(ctx):
 async def info():
     """Information about this bot!"""
     embed=discord.Embed(title="Mr. Pickles Discord Bot", color=0xfb0006)
-    embed.add_field(name="Version", value=(version), inline=True)
-    embed.add_field(name="Developers", value="**MZFX18#0069 & JoshTheGamer632#0017**", inline=True)
+    embed.add_field(name=":information_source: Version", value=(version), inline=True)
+    embed.add_field(name=":busts_in_silhouette: Developers", value="**MZFX18#0069 & JoshTheGamer632#0017**", inline=True)
     embed.add_field(name="<:github:425761614441218048> GitHub", value="https://github.com/MarionStationFM-Productions/mr-pickles-bot", inline=True)
     await bot.say(embed=embed)
 
