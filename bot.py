@@ -130,7 +130,7 @@ async def send_cmd_help(ctx):
             em = discord.Embed(description=page.strip("```").replace('<', '[').replace('>', ']'),
                                color=discord.Color.blue())
             await bot.send_message(ctx.message.channel, embed=em)
-            
+
 @bot.command(pass_context=True)
 async def ping(ctx):
     embed = discord.Embed(title="Pong! :ping_pong:")
@@ -141,7 +141,8 @@ async def info():
     """Information about this bot!"""
     embed=discord.Embed(title="Mr. Pickles Discord Bot", color=0xfb0006)
     embed.add_field(name="Version", value=(version), inline=True)
-    embed.add_field(name="Developers", value="MZFX18#0069 & JoshTheGamer632#0017", inline=True)
+    embed.add_field(name="Developers", value="**MZFX18#0069 & JoshTheGamer632#0017**", inline=True)
+    embed.add_field(name="<:github:425761614441218048> GitHub", value="https://github.com/MarionStationFM-Productions/mr-pickles-bot", inline=True)
     await bot.say(embed=embed)
 
 @bot.command(pass_context=True, hidden=True)
